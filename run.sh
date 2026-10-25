@@ -8,8 +8,8 @@ set -e
 
 REPO="shdynila/lisn-tui-releases"
 
-# 1. Android Termux Detection & Automated Bootstrap
-if ([ -n "$TERMUX_VERSION" ] || [ -d "/data/data/com.termux" ]) && [ ! -f "/etc/proot" ]; then
+# 1. Android Termux Detection & Automated Bootstrap (runs only on Termux host, not inside PRoot)
+if command -v pkg >/dev/null 2>&1 && ([ -n "$TERMUX_VERSION" ] || [ -d "/data/data/com.termux" ]); then
     echo "================================================================="
     echo "📱 Android Termux Environment Detected!"
     echo "================================================================="
@@ -30,9 +30,16 @@ if ([ -n "$TERMUX_VERSION" ] || [ -d "/data/data/com.termux" ]) && [ ! -f "/etc/
     pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1 2>/dev/null || true
 
     # Ensure Ubuntu PRoot is installed
-    if ! proot-distro list 2>/dev/null | grep -A 2 "ubuntu" | grep -q "installed"; then
+    UBUNTU_INSTALLED=false
+    if [ -d "$PREFIX/var/lib/proot-distro/installed-rootfs/ubuntu" ] || [ -d "/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/ubuntu" ]; then
+        UBUNTU_INSTALLED=true
+    elif proot-distro login ubuntu -- true 2>/dev/null; then
+        UBUNTU_INSTALLED=true
+    fi
+
+    if [ "$UBUNTU_INSTALLED" = false ]; then
         echo "🐧 Installing Ubuntu Linux environment in PRoot (one-time setup)..."
-        proot-distro install ubuntu
+        proot-distro install ubuntu || true
     fi
 
     # Create host wrapper shortcut so user can just type 'lisn' directly in Termux
