@@ -10,24 +10,13 @@ Official public distribution hub and automated release portal for **[LISN-TUI](h
 
 No compiling, no Git cloning, no manual tool installations required.
 
-### 📱 Android Phone (Termux)
-Run this single command inside Termux to set up the PulseAudio sound bridge, Linux ARM64 neural environment, and launch LISN-TUI:
-```bash
-curl -sSL https://raw.githubusercontent.com/shdynila/lisn-tui-releases/main/termux.sh | bash
-```
-*(On subsequent runs, simply type `lisn` in Termux!)*
-
-### 🐧 Linux (x86_64 & ARM64)
+### 🐧 🍎 📱 Bash (Linux, macOS, Android/Termux)
 ```bash
 curl -sSL https://raw.githubusercontent.com/shdynila/lisn-tui-releases/main/run.sh | bash
 ```
+*(Universal installer: automatically detects Linux x86_64/ARM64, macOS Apple Silicon/Intel, or Android Termux with PulseAudio bridge, downloads the matching pre-built binary, and runs immediately.)*
 
-### 🍎 macOS (Apple Silicon & Intel)
-```bash
-curl -sSL https://raw.githubusercontent.com/shdynila/lisn-tui-releases/main/run.sh | bash
-```
-
-### 🪟 Windows (PowerShell)
+### 🪟 PowerShell (Windows)
 ```powershell
 irm https://raw.githubusercontent.com/shdynila/lisn-tui-releases/main/run.ps1 | iex
 ```
