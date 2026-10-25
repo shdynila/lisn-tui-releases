@@ -1,0 +1,4 @@
+baseURL = 'https://shdynila.github.io/lisn-tui-releases/'
+languageCode = 'en-us'
+title = 'LISN-TUI - Neural Audio Workstation'
+disableKinds = ["taxonomy", "term", "section"]
